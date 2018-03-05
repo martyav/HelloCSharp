@@ -11,7 +11,7 @@ class Hello
         private const bool gotMilk = true;
         private const bool gotHair = true;
         private const bool gotFeathers = false;
-        private String noise = "Squeak";
+        public virtual String noise { get; }
     }
 
     class Marsupial: Mammal 
@@ -23,7 +23,10 @@ class Hello
     {
         private const int legs = 4;
 
-        private string noise = "Meow";
+        public override String noise 
+        {
+            get { return "Meow"; }
+        }
 
         public string Name
         {
@@ -40,7 +43,9 @@ class Hello
     {
         private const int legs = 4;
 
-        private string noise = "Woof";
+        public override String noise {
+            get { return "Woof"; }
+        }
 
         public string Name 
         {
@@ -56,7 +61,10 @@ class Hello
     class Kangaroo: Marsupial {
         private const int legs = 2;
 
-        private string noise = "Dunkaroos";
+        public override String noise 
+        {
+            get { return "Dunkaroos"; }
+        }
 
         private (int, int) position = (0, 0);
 
@@ -110,7 +118,7 @@ class Hello
         Mammal[] Animals = { joey, fluffy, griff };
 
         foreach (Mammal animal in Animals) {
-            Console.WriteLine(Animals.noise);
+            Console.WriteLine(animal.noise);
         }
 
         Console.WriteLine(xyz);
