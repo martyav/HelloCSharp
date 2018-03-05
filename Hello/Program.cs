@@ -6,7 +6,20 @@ using System;
 
 class Hello 
 {
-    class Cat
+    class Mammal 
+    {
+        private const bool gotMilk = true;
+        private const bool gotHair = true;
+        private const bool gotFeathers = false;
+        private String noise = "Squeak";
+    }
+
+    class Marsupial: Mammal 
+    {
+        private const bool gotPouch = true;
+    }
+
+    class Cat: Mammal
     {
         private const int legs = 4;
 
@@ -20,6 +33,47 @@ class Hello
         public void greeting()
         {
             Console.WriteLine(noise + ", world!");
+        }
+    }
+
+    class Dog: Mammal 
+    {
+        private const int legs = 4;
+
+        private string noise = "Woof";
+
+        public string Name 
+        {
+            get; set;
+        }
+
+        public string fetch(string text) 
+        {
+            return text;
+        }
+    }
+
+    class Kangaroo: Marsupial {
+        private const int legs = 2;
+
+        private string noise = "Dunkaroos";
+
+        private (int, int) position = (0, 0);
+
+        public string Name
+        {
+            get; set;
+        }
+
+        public void leap((int, int) toPosition) 
+        {
+            position.Item1 += toPosition.Item1;
+            position.Item2 += toPosition.Item2;
+        }
+
+        public void RevealPosition()
+        {
+            Console.WriteLine(position);
         }
     }
 
@@ -40,6 +94,24 @@ class Hello
 
         double xyz = 10.23d + 11.0d;
         decimal abc = 1.2345m + 10;
+
+        Dog griff = new Dog();
+        Kangaroo joey = new Kangaroo();
+
+        String stick = griff.fetch("Stick");
+        Console.WriteLine(stick);
+
+        joey.RevealPosition();
+        joey.leap((1,4));
+        joey.RevealPosition();
+        joey.leap((3,-9));
+        joey.RevealPosition();
+
+        Mammal[] Animals = { joey, fluffy, griff };
+
+        foreach (Mammal animal in Animals) {
+            Console.WriteLine(Animals.noise);
+        }
 
         Console.WriteLine(xyz);
         Console.WriteLine(abc);
