@@ -6,6 +6,8 @@ using System;
 
 class Hello 
 {
+    enum Meat { Chicken, Beef, Pepperoni }
+
     class Mammal 
     {
         private const bool gotMilk = true;
@@ -19,7 +21,12 @@ class Hello
         private const bool gotPouch = true;
     }
 
-    class Cat: Mammal
+    interface Carnivore 
+    {
+        void eat(Meat meat);
+    }
+
+    class Cat: Mammal, Carnivore
     {
         private const int legs = 4;
 
@@ -33,13 +40,18 @@ class Hello
             get; set;
         }
 
+        public void eat(Meat meat) 
+        {
+            Console.WriteLine("Yum!");
+        }
+
         public void greeting()
         {
             Console.WriteLine(noise + ", world!");
         }
     }
 
-    class Dog: Mammal 
+    class Dog: Mammal, Carnivore 
     {
         private const int legs = 4;
 
@@ -55,6 +67,11 @@ class Hello
         public string fetch(string text) 
         {
             return text;
+        }
+
+        public void eat(Meat meat)
+        {
+            Console.WriteLine("Grryum!");
         }
     }
 
@@ -114,6 +131,8 @@ class Hello
         joey.RevealPosition();
         joey.leap((3,-9));
         joey.RevealPosition();
+
+        griff.eat(Meat.Pepperoni);
 
         Mammal[] Animals = { joey, fluffy, griff };
 
