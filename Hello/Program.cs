@@ -2,24 +2,38 @@
 
 using System;
 // System is a namespace. 
-// When we -use- it, we gain access to goodies such as Console
+// When we are `using` it, we gain access to goodies such as Console.
 
 class Hello 
 {
     enum Meat { Chicken, Beef, Pepperoni }
-    // Enums are lists of Consts, and their raw values are always integer values
+    // Enums are lists of Consts, and their raw values are always integer values.
 
     abstract class Mammal 
-    // Abstract classes exist only to serve as bases for derived classes
-    // We can't create an instance of Mammal, but we can make objects whose classes are derived from Mammal
+    // Abstract classes exist only to serve as bases for derived classes.
+    // We can't create an instance of Mammal, but we can make objects whose classes are derived from Mammal.
     {
-        private const bool gotMilk = true;
-        private const bool gotHair = true;
-        private const bool gotFeathers = false;
+        protected const bool gotMilk = true;
+        protected const bool gotHair = true;
+        protected const bool gotFeathers = false;
+        // These are fields. 
+        // They're just regular old values.
+        // Protected means that they're only accessible to their own class and any derived classes.
+        // Consts are immutable and must be intialized in the same line they are declared.
+        // This is because the compiler directly drops the literal assigned to the const into the Common Intermediate Language code it produces, rather than giving it a reference to the const.
+        // If you didn't immediately specify what you were assigning the const to, the compiler would have no idea what to say.
+
+        private int eyeballs = 2;
+        // Private fields are only accessible to the class they were defined in.
 
         public virtual String noise { get; }
-        // The virtual keyword indicates that this method is allowed to be overriden by base classes
-        // It is needed here even though the class is abstract
+        // This is a property. 
+        // It is a special method that we can access as if it were a field.
+        // Properties have getters and setters, just like in Swift.
+        // The `virtual` keyword indicates that this method is allowed to be overridden by base classes.
+        // The keyword is needed to indicate this even though the class is abstract.
+
+        protected virtual bool isAGoodBoy { get; }
 
         public bool canTalkLikePeople
         {
@@ -81,18 +95,24 @@ class Hello
         }
     }
 
-    class Dog: Mammal, Carnivore 
+    class Dog : Mammal, Carnivore
     {
         private const int legs = 4;
 
-        public override String noise {
+        public override String noise
+        {
             get { return "Woof"; }
         }
 
-        public string Name 
+        public string Name
         {
             get; set;
         }
+
+        sealed protected override bool isAGoodBoy {
+            get { return true; }
+        }
+        // Sealed means the property cannot be overriden by any derived classes of Dog
 
         public string fetch(string text) 
         {
@@ -117,6 +137,8 @@ class Hello
         {
             get { return false; }
         }
+        // Since our kangaroos can say Dunkaroos, we create a new property to specify that they CAN talkLikePeople.
+        // this doesn't override the base class's property -- it creates an entirely `new` one.
 
         private (int, int) position = (0, 0);
 
