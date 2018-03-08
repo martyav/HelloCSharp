@@ -7,13 +7,29 @@ using System;
 class Hello 
 {
     enum Meat { Chicken, Beef, Pepperoni }
+    // Enums are lists of Consts, and their raw values are always integer values
 
-    class Mammal 
+    abstract class Mammal 
+    // Abstract classes exist only to serve as bases for derived classes
+    // We can't create an instance of Mammal, but we can make objects whose classes are derived from Mammal
     {
         private const bool gotMilk = true;
         private const bool gotHair = true;
         private const bool gotFeathers = false;
+
         public virtual String noise { get; }
+        // The virtual keyword indicates that this method is allowed to be overriden by base classes
+        // It is needed here even though the class is abstract
+
+        public bool canTalkLikePeople
+        {
+            get { return false; }
+        }
+        // This method is not marked as virtual. 
+        // We must provide an implementation for it.
+        // If we want a method with the same signature in a derived class, we have to create a new function.
+        // This makes two functions with the same signature. 
+        // But the base class's implementation will be hidden by the derived class's.
     }
 
     class Marsupial: Mammal 
@@ -21,16 +37,25 @@ class Hello
         private const bool gotPouch = true;
     }
 
-    interface Carnivore 
+    interface Carnivore
+    // Interfaces are what C# calls protocols. 
+    // They're collections of methods with no implementation.
+    // Classes that use them provide their own implementations.
     {
         void eat(Meat meat);
     }
 
-    class Cat: Mammal, Carnivore
+    interface Felid 
+    {
+        void purr();
+    }
+
+    class Cat: Mammal, Carnivore, Felid
+    // Classes can inherit from one base class, and multiple interfaces
     {
         private const int legs = 4;
 
-        public override String noise 
+        public override String noise
         {
             get { return "Meow"; }
         }
@@ -43,6 +68,11 @@ class Hello
         public void eat(Meat meat) 
         {
             Console.WriteLine("Yum!");
+        }
+
+        public void purr()
+        {
+            Console.WriteLine("Prrrrrrrrrr");    
         }
 
         public void greeting()
@@ -81,6 +111,11 @@ class Hello
         public override String noise 
         {
             get { return "Dunkaroos"; }
+        }
+
+        public new bool canTalkLikePeople 
+        {
+            get { return false; }
         }
 
         private (int, int) position = (0, 0);
